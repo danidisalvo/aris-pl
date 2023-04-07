@@ -15,7 +15,6 @@ public class Atom extends Token {
                 Assign.class,
                 Comma.class,
                 MaterialImplication.class,
-                Is.class,
                 LBracket.class,
                 Or.class,
                 RBracket.class,

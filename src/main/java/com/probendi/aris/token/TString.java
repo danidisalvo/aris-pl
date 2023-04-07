@@ -15,6 +15,6 @@ public class TString extends Token {
 
     @Override
     public String toString() {
-        return "\"" + super.toString() + "\"";
+        return value;
     }
 }

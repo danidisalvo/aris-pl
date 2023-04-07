@@ -10,15 +10,11 @@ import java.util.List;
 public class Print extends Token {
 
     public Print() {
-        super(List.of());
-    }
-
-    public void setValue(final String value) {
-        this.value = value;
+        super(List.of(TString.class));
     }
 
     @Override
     public String toString() {
-        return value;
+        return "print";
     }
 }

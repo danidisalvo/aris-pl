@@ -21,7 +21,6 @@ public class Parser {
 
     private final Map<String, Argument> arguments = new HashMap<>();
     private final Map<String, Boolean> assertions = new HashMap<>();
-    private final Map<String, String> descriptions = new HashMap<>();
     private final Map<String, Boolean> values = new HashMap<>();
     private final Map<String, Boolean> valuations = new HashMap<>();
     private final Map<String, Boolean> validations = new HashMap<>();
@@ -55,7 +54,11 @@ public class Parser {
                 if (token == null) continue; // this should never happen
 
                 if (token instanceof Print) {
-                    System.out.println(token);
+                    if (tokens.peek() != null) {
+                        System.out.println(tokens.remove());
+                    } else {
+                        System.out.println();
+                    }
                     continue;
                 }
 
@@ -63,8 +66,6 @@ public class Parser {
                 if (token instanceof Atom) {
                     if (nextToken instanceof Assign) {
                         values.put(token.getValue(), tokens.remove() instanceof True);
-                    } else if (nextToken instanceof Is) {
-                        descriptions.put(token.getValue(), tokens.remove().getValue());
                     }
                 } else if (token instanceof com.probendi.aris.token.Argument) {
                     final Identifier identifier = (Identifier) nextToken;
@@ -114,10 +115,6 @@ public class Parser {
 
     protected Map<String, Boolean> getAssertions() {
         return assertions;
-    }
-
-    protected Map<String, String> getDescriptions() {
-        return descriptions;
     }
 
     protected Map<String, Boolean> getValues() {

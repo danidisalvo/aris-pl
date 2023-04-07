@@ -48,7 +48,6 @@ public class LexicalAnalyzer {
             "argument", Argument.class,
             "assert", Assert.class,
             "false", False.class,
-            "is", Is.class,
             "print", Print.class,
             "therefore", Therefore.class,
             "true", True.class,
@@ -96,7 +95,6 @@ public class LexicalAnalyzer {
                 final String str = n != -1 ? line.substring(0, n) : line;
                 final Queue<Token> queue = new LinkedList<>();
 
-                mainloop:
                 for (int i = 0; i < str.length(); i++) {
                     final char c = str.charAt(i);
 
@@ -172,18 +170,12 @@ public class LexicalAnalyzer {
                                     throw new UnexpectedCharacterException(String.format(UNEXPECTED_CHARACTER, str.charAt(i), i, line));
                                 }
 
-                                if ("therefore".equals(k) || "valuate".equals(k) || "argument".equals(k)) {
+                                if ("argument".equals(k) || "print".equals(k) || "therefore".equals(k) || "valuate".equals(k)) {
                                     if (counts.containsKey(k)) {  // there can be only one symbol per line
                                         throw new UnexpectedSymbolException(String.format(UNEXPECTED_SYMBOL, k, i - k.length(), line));
                                     } else {
                                         counts.put(k, true);
                                     }
-                                } else if ("print".equals(k)) {
-                                    final String value = str.substring(i).trim()
-                                            .replace("\\n", "\n")
-                                            .replace("\\t", "\t");
-                                    ((Print) Objects.requireNonNull(queue.peek())).setValue(value);
-                                    break mainloop;
                                 }
 
                                 found = true;
@@ -215,19 +207,15 @@ public class LexicalAnalyzer {
                 while ((token = queue.poll()) != null) {
                     if (list.isEmpty()) {
                         final Token nextToken = queue.peek();
-                        if (token instanceof Print) {
-                            list.add(token);
-                            break;
-                        }
-                        if (nextToken == null) {
+                        if (!(token instanceof Print) && nextToken == null) {
                             throw new UnexpectedEndOfLineException(String.format(UNEXPECTED_END_OF_LINE, line));
                         }
                         if (token instanceof Atom) {
-                            if (!(nextToken instanceof Is || nextToken instanceof Assign)) {
+                            if (!(nextToken instanceof Assign)) {
                                 throw new UnexpectedSymbolException(String.format(UNEXPECTED_SYMBOL, nextToken, i, line));
                             }
                         } else if (!(token instanceof Argument || token instanceof Assert ||
-                                token instanceof Validate || token instanceof Valuate)) {
+                                token instanceof Print || token instanceof Validate || token instanceof Valuate)) {
                             throw new UnexpectedSymbolException(String.format(UNEXPECTED_SYMBOL, token, i, line));
                         }
                     }

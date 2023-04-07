@@ -51,13 +51,6 @@ public class ParserTest {
 
         assertEquals(arguments, parser.getArguments());
 
-        final Map<String, String> descriptions = Map.of(
-                "P", "All men are mortal",
-                "Q", "Socrates is a man",
-                "R", "Socrates is mortal"
-        );
-        assertEquals(descriptions, parser.getDescriptions());
-
         final Map<String, Boolean> values = Map.of("P", true, "Q", true, "R", true);
         assertEquals(values, parser.getValues());
 

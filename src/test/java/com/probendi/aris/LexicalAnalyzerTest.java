@@ -48,18 +48,19 @@ public class LexicalAnalyzerTest {
 class LexicalAnalyzerArgumentsProvider implements ArgumentsProvider {
 
     private static final String text = """
-            P is "All men are mortal" // first premise
-            Q is "Socrates is a man" // second premise
-            \tR is "Socrates is mortal" // conclusion
-
+            print "Hello, Aris!"
+            print
+            
             // here we go!
             P := \t  true
              Q := true
             R := true
             argument arg1 := (P & Q) ∴ R
             valuate arg1
+            
             argument arg2 := P, ¬(P ∧ ¬Q) ∴ Q
             validate arg2
+            
             argument arg3 := (¬(¬(P ∧ Q) ∧ ¬(P ∧ R)) ∨ ¬(P ∧ (Q ∨ R)))
             assert arg3""";
 
@@ -75,20 +76,20 @@ class LexicalAnalyzerArgumentsProvider implements ArgumentsProvider {
     static final Identifier ARG_1 = new Identifier("arg1");
     static final Identifier ARG_2 = new Identifier("arg2");
     static final Identifier ARG_3 = new Identifier("arg3");
-    static final Is IS = new Is();
     static final LBracket L_BRACKET = new LBracket();
     static final Not NOT = new Not();
     static final Or OR = new Or();
+    static final Print PRINT = new Print();
     static final RBracket R_BRACKET = new RBracket();
     static final Therefore THEREFORE = new Therefore();
+    static final TString HELLO_ARIS = new TString("Hello, Aris!");
     static final True TRUE = new True();
     static final Validate VALIDATE = new Validate();
     static final Valuate VALUATE = new Valuate();
 
     static final List<List<Token>> tokens = List.of(
-            List.of(P, IS, new TString("All men are mortal")),
-            List.of(Q, IS, new TString("Socrates is a man")),
-            List.of(R, IS, new TString("Socrates is mortal")),
+            List.of(PRINT, HELLO_ARIS),
+            List.of(PRINT),
             List.of(P, ASSIGN, TRUE),
             List.of(Q, ASSIGN, TRUE),
             List.of(R, ASSIGN, TRUE),
@@ -136,8 +137,6 @@ class LexicalAnalyzerFailsArgumentsProvider implements ArgumentsProvider {
                         "Unexpected symbol 'Q' at position 1 of line 'P Q'"),
                 Arguments.of("(P & Q)", UnexpectedSymbolException.class,
                         "Unexpected symbol '(' at position 1 of line '(P & Q)'"),
-                Arguments.of("P is true", UnexpectedSymbolException.class,
-                        "Unexpected symbol 'true' at position 2 of line 'P is true'"),
                 Arguments.of("!P therefore Q therefore R", UnexpectedSymbolException.class,
                         "Unexpected symbol 'therefore' at position 15 of line '!P therefore Q therefore R'"),
                 Arguments.of("P", UnexpectedEndOfLineException.class,
