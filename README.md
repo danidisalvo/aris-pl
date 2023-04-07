@@ -9,7 +9,7 @@ aris-pl defines a set of unary and binary operators and can validate and valuate
 
 **Negation**: `¬`, `!`, or `~`.
 
-### Binary operators
+### Binary Operators
 
 - **Assignment**: `:=`
 
@@ -25,15 +25,15 @@ Binary operators have the same precedence, and _must_ always be enclosed in a pa
 
 ### Well-Formed Formulae
 
-An **atomic** well-formed formula (wff) _must_ begin with an upper case latin-letter (A-Z), 
-and it can contain upper case latin-letters, digits and the prime `'` character:
+An **atomic** well-formed formula (wff) _must_ begin with an upper case latin letter (A-Z), 
+and it can contain upper case latin letters, digits and the prime `'` character:
 
 - If `P` is a wff, then `¬P` is a wff;
 - If `P` and `Q` are wff, then `(P ∧ Q)`, `(P ∨ Q)`, and `(P → Q)` are wff
 
 ### Identifiers
 
-An identifier _must_ begin with a lower case latin-letter (a-y), and it can contain lower case latin-letters and digits 
+An identifier _must_ begin with a lower case latin letter (a-z), and it can contain lower case latin letters and digits 
 
 ### Arguments
 
@@ -105,7 +105,7 @@ argument "(¬(¬(P ∧ Q) ∧ ¬(P ∧ R)) ∨ ¬(P ∧ (Q ∨ R)))" is a tautol
 - `validate`
 - `valuate`
 
-## How to build and run aris-pl
+## How to Build and Run aris-pl
 
 ```
 mvn clean package
