@@ -29,6 +29,7 @@ public class LexicalAnalyzer {
         oneCharacterTokenMap.put('&', And.class);
         oneCharacterTokenMap.put(',', Comma.class);
         oneCharacterTokenMap.put('→', MaterialImplication.class);
+        oneCharacterTokenMap.put('⊃', MaterialImplication.class);
         oneCharacterTokenMap.put('¬', Not.class);
         oneCharacterTokenMap.put('~', Not.class);
         oneCharacterTokenMap.put('!', Not.class);

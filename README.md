@@ -7,7 +7,7 @@ aris-pl defines a set of unary and binary operators and can validate and valuate
 
 ### Unary Operators
 
-**Negation**: `¬`, `!`, or `~`.
+**Negation**: `¬`, `!`, or `~`
 
 ### Binary Operators
 
@@ -17,7 +17,7 @@ aris-pl defines a set of unary and binary operators and can validate and valuate
 
 - **Disjunction**: `∨`, or `|`
 
-- **Conditional, or Material implication**: `→`, or `->`
+- **Conditional, or Material implication**: `→`, `->`, or `⊃`
 
 - **Therefore**: `∴`, or `therefore`
 
