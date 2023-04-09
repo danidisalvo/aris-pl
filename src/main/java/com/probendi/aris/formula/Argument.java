@@ -14,6 +14,9 @@ public class Argument implements WellFormedFormula {
     final private List<WellFormedFormula> premises = new LinkedList<>();
     private WellFormedFormula conclusion;
 
+    /**
+     * Creates a argument.
+     */
     public Argument() {
     }
 
@@ -35,14 +38,29 @@ public class Argument implements WellFormedFormula {
         this.premises.addAll(List.of(premises));
     }
 
+    /**
+     * Returns the premises.
+     *
+     * @return the premises
+     */
     public List<WellFormedFormula> getPremises() {
         return premises;
     }
 
+    /**
+     * Returns the conclusion.
+     *
+     * @return the conclusion
+     */
     public WellFormedFormula getConclusion() {
         return conclusion;
     }
 
+    /**
+     * Sets the conclusion.
+     *
+     * @param conclusion the conclusion to be set
+     */
     public void setConclusion(final WellFormedFormula conclusion) {
         if (conclusion == null) {
             throw new IllegalArgumentException("conclusion cannot be null");
@@ -50,6 +68,11 @@ public class Argument implements WellFormedFormula {
         this.conclusion = conclusion;
     }
 
+    /**
+     * Add the given premise to this argument.
+     *
+     * @param premise the premise to be added
+     */
     public void addPremise(final WellFormedFormula premise) {
         if (premise == null) {
             throw new IllegalArgumentException("premise cannot be null");
@@ -62,7 +85,7 @@ public class Argument implements WellFormedFormula {
      *
      * @return {@code true} if the given well-formed formula is a tautology
      */
-    public boolean isTautology() throws MissingSymbolException {
+    public boolean isTautology() {
         if (conclusion != null || premises.size() != 1) {
             final String msg = "this method can be only invoked on arguments without conclusion and exactly one premises";
             throw new UnsupportedOperationException(msg);
@@ -77,8 +100,11 @@ public class Argument implements WellFormedFormula {
         }
 
         for (final Map<String, Boolean> values : generateTruthTable(vars)) {
-            if (!wff.valuate(values)) {
-                return false;
+            try {
+                if (!wff.valuate(values)) {
+                    return false;
+                }
+            } catch (final MissingSymbolException ignore) { // ignored, for values is always complete
             }
         }
 
@@ -91,6 +117,7 @@ public class Argument implements WellFormedFormula {
      * and the negation of the conclusion all true.
      *
      * @return {@code true} if this argument is valid
+     * @throws MissingSymbolException if a symbol is not found in the values lookup table
      */
     public boolean isValid() throws MissingSymbolException {
         final List<WellFormedFormula> formulae = new LinkedList<>();

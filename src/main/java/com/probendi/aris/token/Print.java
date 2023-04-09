@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Print extends Token {
 
+    /**
+     * Creates a new {@code print} token.
+     */
     public Print() {
         super(List.of(TString.class));
     }

@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Therefore extends Token {
 
+    /**
+     * Creates a new {@code ∴} token.
+     */
     public Therefore() {
         super(List.of(Atom.class, LBracket.class, Not.class));
     }

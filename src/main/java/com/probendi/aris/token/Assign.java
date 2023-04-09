@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Assign extends Token {
 
+    /**
+     * Creates a new {@code :=} token.
+     */
     public Assign() {
         super(List.of(Atom.class, False.class, LBracket.class, Not.class, True.class));
     }

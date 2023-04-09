@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class RBracket extends Token {
 
+    /**
+     * Creates a new {@code )} token.
+     */
     public RBracket() {
         super(List.of(And.class, MaterialImplication.class, Comma.class, Or.class, RBracket.class, Therefore.class));
     }

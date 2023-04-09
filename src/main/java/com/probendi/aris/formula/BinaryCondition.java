@@ -7,6 +7,12 @@ package com.probendi.aris.formula;
  */
 public record BinaryCondition(Condition c1, Condition c2) implements Condition {
 
+    /**
+     * Creates a new binary condition.
+     *
+     * @param c1 the first or left condition
+     * @param c2 the second or right condition
+     */
     public BinaryCondition {
         if (c1 == null) {
             throw new IllegalArgumentException("c1 cannot be null");

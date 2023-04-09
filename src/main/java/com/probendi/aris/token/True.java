@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class True extends Token {
 
+    /**
+     * Creates a new {@code true} token.
+     */
     public True() {
         super(List.of());
     }

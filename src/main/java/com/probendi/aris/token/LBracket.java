@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class LBracket extends Token {
 
+    /**
+     * Creates a new {@code (} token.
+     */
     public LBracket() {
         super(List.of(Atom.class, LBracket.class, Not.class));
     }

@@ -9,6 +9,11 @@ import java.util.List;
  */
 public class TString extends Token {
 
+    /**
+     * Creates a new {@code string} token with the given value.
+     *
+     * @param value the value
+     */
     public TString(final String value) {
         super(List.of(), value);
     }

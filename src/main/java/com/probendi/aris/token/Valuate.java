@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Valuate extends Token {
 
+    /**
+     * Creates a new {@code valuate} token.
+     */
     public Valuate() {
         super(List.of(Identifier.class));
     }

@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class False extends Token {
 
+    /**
+     * Creates a new {@code false} token.
+     */
     public False() {
         super(List.of());
     }

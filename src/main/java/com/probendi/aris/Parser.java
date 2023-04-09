@@ -109,22 +109,47 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns the arguments.
+     *
+     * @return the arguments
+     */
     protected Map<String, Argument> getArguments() {
         return arguments;
     }
 
+    /**
+     * Returns the assertions.
+     *
+     * @return the assertions
+     */
     protected Map<String, Boolean> getAssertions() {
         return assertions;
     }
 
+    /**
+     * Returns the values.
+     *
+     * @return the values
+     */
     protected Map<String, Boolean> getValues() {
         return values;
     }
 
+    /**
+     * Returns the validations.
+     *
+     * @return the validations
+     */
     protected Map<String, Boolean> getValidations() {
         return validations;
     }
 
+    /**
+     * Returns the valuations.
+     *
+     * @return the valuations
+     */
     protected Map<String, Boolean> getValuations() {
         return valuations;
     }

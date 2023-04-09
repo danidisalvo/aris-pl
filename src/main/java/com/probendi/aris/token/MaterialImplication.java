@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class MaterialImplication extends Token {
 
+    /**
+     * Creates a new {@code →} token.
+     */
     public MaterialImplication() {
         super(List.of(Atom.class, LBracket.class, Not.class));
     }

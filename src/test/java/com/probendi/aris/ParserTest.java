@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static com.probendi.aris.LexicalAnalyzerArgumentsProvider.tokens;
+import static com.probendi.aris.LexicalAnalyzerTest.tokens;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ParserTest {

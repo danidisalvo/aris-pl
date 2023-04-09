@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Validate extends Token {
 
+    /**
+     * Creates a new {@code validate} token.
+     */
     public Validate() {
         super(List.of(Identifier.class));
     }

@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Comma extends Token {
 
+    /**
+     * Creates a new {@code ,} token.
+     */
     public Comma() {
         super(List.of(Atom.class, LBracket.class, Not.class));
     }

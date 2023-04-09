@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Not extends Token {
 
+    /**
+     * Creates a new {@code ¬} token.
+     */
     public Not() {
         super(List.of(Atom.class, LBracket.class, Not.class));
     }

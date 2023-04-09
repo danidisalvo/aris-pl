@@ -21,6 +21,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class WellFormattedFormulaTest {
 
+    private static final AtomicCondition P = new AtomicCondition("P");
+    private static final AtomicCondition Q = new AtomicCondition("Q");
+    private static final AtomicCondition R = new AtomicCondition("R");
+    private static final Negation NOT_P = new Negation(P);
+    private static final Negation NOT_Q = new Negation(Q);
+    private static final Negation NOT_R = new Negation(R);
+    private static final Disjunction DIS_NOT_P_NOT_Q = new Disjunction(NOT_P, NOT_Q);
+
     @ParameterizedTest
     @ArgumentsSource(DetermineTruthConditionsArgumentsProvider.class)
     void testDetermineTruthConditions(final WellFormedFormula wff, final List<Condition> expected) {
@@ -86,114 +94,101 @@ public class WellFormattedFormulaTest {
 
     @ParameterizedTest
     @ArgumentsSource(ValidateTautologyProvider.class)
-    void testIsTautology(final WellFormedFormula wff, final boolean expected) throws ArisException {
+    void testIsTautology(final WellFormedFormula wff, final boolean expected) {
         final Argument argument = new Argument();
         argument.addPremise(wff);
         assertEquals(expected, argument.isTautology());
     }
-}
 
-class ValuationArgumentsProvider implements ArgumentsProvider {
+    static class ValuationArgumentsProvider implements ArgumentsProvider {
 
-    private static final AtomicCondition P = new AtomicCondition("P");
-    private static final AtomicCondition Q = new AtomicCondition("Q");
-    private static final Negation NOT_P = new Negation(P);
-    private static final Negation NOT_Q = new Negation(Q);
-    private static final Disjunction DIS_NOT_P_NOT_Q = new Disjunction(NOT_P, NOT_Q);
-
-    @Override
-    public Stream<? extends Arguments> provideArguments(final ExtensionContext context) {
-        return Stream.of(
-                Arguments.of(NOT_P, Map.of("P", true), false),
-                Arguments.of(NOT_P, Map.of("P", false), true),
-                Arguments.of(DIS_NOT_P_NOT_Q, Map.of("P", true, "Q", false), true),
-                Arguments.of(DIS_NOT_P_NOT_Q, Map.of("P", true, "Q", true), false)
-        );
+        @Override
+        public Stream<? extends Arguments> provideArguments(final ExtensionContext context) {
+            return Stream.of(
+                    Arguments.of(NOT_P, Map.of("P", true), false),
+                    Arguments.of(NOT_P, Map.of("P", false), true),
+                    Arguments.of(DIS_NOT_P_NOT_Q, Map.of("P", true, "Q", false), true),
+                    Arguments.of(DIS_NOT_P_NOT_Q, Map.of("P", true, "Q", true), false)
+            );
+        }
     }
-}
 
-class DetermineTruthConditionsArgumentsProvider implements ArgumentsProvider {
+    static class DetermineTruthConditionsArgumentsProvider implements ArgumentsProvider {
 
-    private static final AtomicCondition P = new AtomicCondition("P");
-    private static final AtomicCondition Q = new AtomicCondition("Q");
-    private static final AtomicCondition R = new AtomicCondition("R");
-    private static final Negation NOT_P = new Negation(P);
-    private static final Negation NOT_Q = new Negation(Q);
-    private static final Negation NOT_R = new Negation(R);
+        private static final AtomicCondition P = new AtomicCondition("P");
+        private static final AtomicCondition Q = new AtomicCondition("Q");
+        private static final AtomicCondition R = new AtomicCondition("R");
+        private static final Negation NOT_P = new Negation(P);
+        private static final Negation NOT_Q = new Negation(Q);
+        private static final Negation NOT_R = new Negation(R);
 
-    private static final Condition P_FALSE = new AtomicCondition("P").setFalse();
-    private static final Condition P_TRUE = new AtomicCondition("P").setTrue();
-    private static final Condition Q_FALSE = new AtomicCondition("Q").setFalse();
-    private static final Condition Q_TRUE = new AtomicCondition("Q").setTrue();
-    private static final Condition R_FALSE = new AtomicCondition("R").setFalse();
+        private static final Condition P_FALSE = new AtomicCondition("P").setFalse();
+        private static final Condition P_TRUE = new AtomicCondition("P").setTrue();
+        private static final Condition Q_FALSE = new AtomicCondition("Q").setFalse();
+        private static final Condition Q_TRUE = new AtomicCondition("Q").setTrue();
+        private static final Condition R_FALSE = new AtomicCondition("R").setFalse();
 
-    @Override
-    public Stream<? extends Arguments> provideArguments(final ExtensionContext context) {
-        return Stream.of(
-                Arguments.of(P, List.of(P_TRUE)),
-                Arguments.of(NOT_P, List.of(P_FALSE)),
-                Arguments.of(new Negation(NOT_Q), List.of(Q_TRUE)),
-                Arguments.of(new Negation(new Negation(NOT_R)), List.of(R_FALSE)),
+        @Override
+        public Stream<? extends Arguments> provideArguments(final ExtensionContext context) {
+            return Stream.of(
+                    Arguments.of(P, List.of(P_TRUE)),
+                    Arguments.of(NOT_P, List.of(P_FALSE)),
+                    Arguments.of(new Negation(NOT_Q), List.of(Q_TRUE)),
+                    Arguments.of(new Negation(new Negation(NOT_R)), List.of(R_FALSE)),
 
-                Arguments.of(new Conjunction(P, Q), List.of(new BinaryCondition(P_TRUE, Q_TRUE))),
-                Arguments.of(new Conjunction(P, NOT_Q), List.of(new BinaryCondition(P_TRUE, Q_FALSE))),
-                Arguments.of(new Conjunction(NOT_P, NOT_Q), List.of(new BinaryCondition(P_FALSE, Q_FALSE))),
-                Arguments.of(new Negation(new Conjunction(P, Q)), List.of(
-                        new BinaryCondition(P_FALSE, Q_FALSE),
-                        new BinaryCondition(P_FALSE, Q_TRUE),
-                        new BinaryCondition(P_TRUE, Q_FALSE)
-                )),
-                Arguments.of(new Negation(new Conjunction(NOT_P, NOT_Q)), List.of(
-                        new BinaryCondition(P_TRUE, Q_TRUE),
-                        new BinaryCondition(P_TRUE, Q_FALSE),
-                        new BinaryCondition(P_FALSE, Q_TRUE)
-                )),
-                Arguments.of(new Disjunction(P, Q), List.of(
-                        new BinaryCondition(P_TRUE, Q_FALSE),
-                        new BinaryCondition(P_FALSE, Q_TRUE),
-                        new BinaryCondition(P_TRUE, Q_TRUE)
-                )),
-                Arguments.of(new Negation(new Disjunction(P, Q)), List.of(new BinaryCondition(P_FALSE, Q_FALSE))),
-                Arguments.of(new Conditional(P, Q), List.of(
-                        new BinaryCondition(P_FALSE, Q_FALSE),
-                        new BinaryCondition(P_FALSE, Q_TRUE),
-                        new BinaryCondition(P_TRUE, Q_TRUE)
-                ))
-        );
+                    Arguments.of(new Conjunction(P, Q), List.of(new BinaryCondition(P_TRUE, Q_TRUE))),
+                    Arguments.of(new Conjunction(P, NOT_Q), List.of(new BinaryCondition(P_TRUE, Q_FALSE))),
+                    Arguments.of(new Conjunction(NOT_P, NOT_Q), List.of(new BinaryCondition(P_FALSE, Q_FALSE))),
+                    Arguments.of(new Negation(new Conjunction(P, Q)), List.of(
+                            new BinaryCondition(P_FALSE, Q_FALSE),
+                            new BinaryCondition(P_FALSE, Q_TRUE),
+                            new BinaryCondition(P_TRUE, Q_FALSE)
+                    )),
+                    Arguments.of(new Negation(new Conjunction(NOT_P, NOT_Q)), List.of(
+                            new BinaryCondition(P_TRUE, Q_TRUE),
+                            new BinaryCondition(P_TRUE, Q_FALSE),
+                            new BinaryCondition(P_FALSE, Q_TRUE)
+                    )),
+                    Arguments.of(new Disjunction(P, Q), List.of(
+                            new BinaryCondition(P_TRUE, Q_FALSE),
+                            new BinaryCondition(P_FALSE, Q_TRUE),
+                            new BinaryCondition(P_TRUE, Q_TRUE)
+                    )),
+                    Arguments.of(new Negation(new Disjunction(P, Q)), List.of(new BinaryCondition(P_FALSE, Q_FALSE))),
+                    Arguments.of(new Conditional(P, Q), List.of(
+                            new BinaryCondition(P_FALSE, Q_FALSE),
+                            new BinaryCondition(P_FALSE, Q_TRUE),
+                            new BinaryCondition(P_TRUE, Q_TRUE)
+                    ))
+            );
+        }
     }
-}
 
-class ValidateTautologyProvider implements ArgumentsProvider {
+    static class ValidateTautologyProvider implements ArgumentsProvider {
 
-    private static final AtomicCondition P = new AtomicCondition("P");
-    private static final AtomicCondition Q = new AtomicCondition("Q");
-    private static final AtomicCondition R = new AtomicCondition("R");
-    private static final Negation NOT_P = new Negation(P);
-    private static final Negation NOT_Q = new Negation(Q);
-    private static final Negation NOT_R = new Negation(R);
-
-    @Override
-    public Stream<? extends Arguments> provideArguments(final ExtensionContext context) {
-        return Stream.of(
-                Arguments.of(P, false),
-                Arguments.of(new Conjunction(P, P), false),
-                Arguments.of(new Conjunction(P, new Negation(P)), false),
-                Arguments.of(new Disjunction(P, P), false),
-                Arguments.of(new Disjunction(P, new Negation(P)), true),
-                // ((P ∧ (Q ∨ R)) ∨ (¬P ∧ (¬Q ∨ ¬R)))
-                Arguments.of(new Disjunction(
-                        new Conjunction(P, new Disjunction(Q, R)),
-                        new Conjunction(NOT_P, new Conjunction(NOT_Q, NOT_R))), false),
-                // (¬(¬(P ∧ Q) ∧ ¬(P ∧ R)) ∨ ¬(P ∧ (Q ∨ R)))
-                Arguments.of(new Disjunction(
-                        new Negation(
-                                new Conjunction(
-                                        new Negation(new Conjunction(P, Q)),
-                                        new Negation(new Conjunction(P, R)))
-                        ),
-                        new Negation(new Conjunction(P, new Disjunction(Q, R)))
-                ), true)
-        );
+        @Override
+        public Stream<? extends Arguments> provideArguments(final ExtensionContext context) {
+            return Stream.of(
+                    Arguments.of(P, false),
+                    Arguments.of(new Conjunction(P, P), false),
+                    Arguments.of(new Conjunction(P, new Negation(P)), false),
+                    Arguments.of(new Disjunction(P, P), false),
+                    Arguments.of(new Disjunction(P, new Negation(P)), true),
+                    // ((P ∧ (Q ∨ R)) ∨ (¬P ∧ (¬Q ∨ ¬R)))
+                    Arguments.of(new Disjunction(
+                            new Conjunction(P, new Disjunction(Q, R)),
+                            new Conjunction(NOT_P, new Conjunction(NOT_Q, NOT_R))), false),
+                    // (¬(¬(P ∧ Q) ∧ ¬(P ∧ R)) ∨ ¬(P ∧ (Q ∨ R)))
+                    Arguments.of(new Disjunction(
+                            new Negation(
+                                    new Conjunction(
+                                            new Negation(new Conjunction(P, Q)),
+                                            new Negation(new Conjunction(P, R)))
+                            ),
+                            new Negation(new Conjunction(P, new Disjunction(Q, R)))
+                    ), true)
+            );
+        }
     }
 }
 

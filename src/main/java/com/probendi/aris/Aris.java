@@ -16,6 +16,11 @@ public class Aris {
 
     private static final String USAGE = "Usage: java -jar aris-pl-1.0.jar file";
 
+    /**
+     * Runs {@code aris-pl}.
+     *
+     * @param args the command line argument
+     */
     public static void main(final String[] args) {
         if (args.length != 1) {
             System.out.println(USAGE);

@@ -12,17 +12,36 @@ public abstract class Token {
 
     private final List<Class<? extends Token>> validTokens;
 
+    /**
+     * The token's value, which could be e.g., an identifier's name, a string's content etc.
+     */
     protected String value;
 
+    /**
+     * Creates a new token with the list of tokens which can follow it.
+     *
+     * @param validTokens the list of tokens which can follow this token
+     */
     protected Token(final List<Class<? extends Token>> validTokens) {
         this.validTokens = validTokens;
     }
 
+    /**
+     * Creates a new token with the list of tokens which can follow it and a value.
+     *
+     * @param validTokens the list of tokens which can follow this token
+     * @param value       the value
+     */
     protected Token(final List<Class<? extends Token>> validTokens, final String value) {
         this.validTokens = validTokens;
         this.value = value;
     }
 
+    /**
+     * Returns the value.
+     *
+     * @return the value
+     */
     public String getValue() {
         return value;
     }

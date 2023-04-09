@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class And extends Token {
 
+    /**
+     * Creates a new {@code ∧} token.
+     */
     public And() {
         super(List.of(Atom.class, LBracket.class, Not.class));
     }

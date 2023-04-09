@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Or extends Token {
 
+    /**
+     * Creates a new {@code ∨} token.
+     */
     public Or() {
         super(List.of(Atom.class, LBracket.class, Not.class));
     }

@@ -9,6 +9,11 @@ import java.util.List;
  */
 public class Atom extends Token {
 
+    /**
+     * Creates a new {@code atom} with the given value.
+     *
+     * @param value the value
+     */
     public Atom(final String value) {
         super(List.of(
                 And.class,

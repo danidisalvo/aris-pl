@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Argument extends Token {
 
+    /**
+     * Creates a new {@code argument} token.
+     */
     public Argument() {
         super(List.of(Identifier.class));
     }

@@ -16,15 +16,30 @@ public class AtomicCondition extends Atom implements Condition, WellFormedFormul
 
     private Boolean boolValue;
 
+    /**
+     * Creates a new atomic condition with the given value.
+     *
+     * @param value the value
+     */
     public AtomicCondition(final String value) {
         super(value);
     }
 
+    /**
+     * Sets this atomic condition to {@code false}.
+     *
+     * @return this atomic condition.
+     */
     public AtomicCondition setFalse() {
         boolValue = false;
         return this;
     }
 
+    /**
+     * Sets this atomic condition to {@code true}.
+     *
+     * @return this atomic condition.
+     */
     public AtomicCondition setTrue() {
         boolValue = true;
         return this;

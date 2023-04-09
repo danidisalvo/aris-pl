@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class Assert extends Token {
 
+    /**
+     * Creates a new {@code assert} token.
+     */
     public Assert() {
         super(List.of(Identifier.class));
     }

@@ -6,7 +6,10 @@ import com.probendi.aris.token.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 
 /**
  * {@code LexicalAnalyzer} lexically analyses the input data and produces a list of tokens.
@@ -73,6 +76,11 @@ public class LexicalAnalyzer {
         this.reader = reader;
     }
 
+    /**
+     * Returns the produced tokens.
+     *
+     * @return the tokens
+     */
     public Queue<Queue<Token>> getTokens() {
         return tokens;
     }

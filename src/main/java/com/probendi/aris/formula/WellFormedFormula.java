@@ -32,6 +32,7 @@ public interface WellFormedFormula {
     /**
      * Valuates this formula.
      *
+     * @param values a map containing the symbols' truth-values
      * @return {@code true} if this formula preserves the truth
      * @throws IllegalArgumentException if values is {@code null}
      * @throws MissingSymbolException   if this formula could not be evaluated because a symbol has no value
