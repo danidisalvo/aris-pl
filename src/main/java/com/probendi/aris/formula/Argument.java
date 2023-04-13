@@ -15,7 +15,7 @@ public class Argument implements WellFormedFormula {
     private WellFormedFormula conclusion;
 
     /**
-     * Creates a argument.
+     * Creates a new argument.
      */
     public Argument() {
     }
@@ -114,7 +114,7 @@ public class Argument implements WellFormedFormula {
 
     /**
      * Returns {@code true} if this argument is valid, i.e., if there is a relevant valuation which makes the premises
-     * and the negation of the conclusion all true.
+     * and the negated conclusion all true.
      *
      * @return {@code true} if this argument is valid
      * @throws MissingSymbolException if a symbol is not found in the values lookup table
@@ -133,19 +133,24 @@ public class Argument implements WellFormedFormula {
             }
         }
 
+        // iterate over all possible input variables configurations
         for (final Map<String, Boolean> values : generateTruthTable(vars)) {
             boolean valid = true;
+            // valuate all formulae for a given input variables configuration
             for (final WellFormedFormula wff : formulae) {
                 if (!wff.valuate(values)) {
+                    // if one formula is false, then move on to the next input variables configuration
                     valid = false;
                     break;
                 }
             }
+            // an input variables configuration which makes the premises and the negated conclusion all true was found
             if (valid) {
                 return false;
             }
         }
 
+        // no configuration was found, hence the argument is valid
         return true;
     }
 
